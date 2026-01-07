@@ -23,7 +23,7 @@
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.119.02
-Release:         2%{?dist}
+Release:         3%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -51,7 +51,7 @@ Requires(post):   %{_sbindir}/grubby
 Requires:         pciutils
 Requires:         which
 Requires:         nvidia-settings-580xx%{?_isa} = %{?epoch}:%{version}
-Requires:         nvidia-modprobe%{?_isa} = %{?epoch}:%{version}
+Requires:         nvidia-modprobe%{?_isa} >= %{?epoch}:%{version}
 BuildRequires:    systemd-rpm-macros
 # AppStream metadata generation
 BuildRequires:    python3
@@ -113,8 +113,8 @@ This package provides the development files of the %{name} package.
 Summary:         CUDA driver tools for %{name}
 Requires:        %{_nvidia_serie}-kmod >= %{?epoch}:%{version}
 Requires:        %{name}-cuda-libs%{?_isa} = %{?epoch}:%{version}-%{release}
-Requires:        nvidia-persistenced%{?_isa} = %{?epoch}:%{version}
-Requires:        nvidia-modprobe%{?_isa} = %{?epoch}:%{version}
+Requires:        nvidia-persistenced%{?_isa} >= %{?epoch}:%{version}
+Requires:        nvidia-modprobe%{?_isa} >= %{?epoch}:%{version}
 %ifarch x86_64
 Requires:        (%{name}-cuda-libs(x86-32) = %{?epoch}:%{version}-%{release} if mesa-libGL(x86-32))
 %endif
@@ -643,6 +643,9 @@ fi ||:
 %endif
 
 %changelog
+* Wed Jan 07 2026 Sérgio Basto <sergio@serjux.com> - 3:580.119.02-3
+- rfbz#7380 allow modprobe and nvidia-persistenced to be one major version ahead
+
 * Sat Dec 20 2025 Sérgio Basto <sergio@serjux.com> - 3:580.119.02-2
 - Initial commit for xorg-x11-drv-nvidia-580xx
 
