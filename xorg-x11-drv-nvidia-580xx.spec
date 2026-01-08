@@ -82,15 +82,31 @@ Conflicts:       xorg-x11-drv-nvidia
 
 
 %description
-This package provides the most recent NVIDIA display driver which allows for
-hardware accelerated rendering with current NVIDIA chipsets series.
-Fermi and Kelper GPUs NOT supported by this release.
+This package provides the most recent legacy NVIDIA display driver.
+It supports hardware-accelerated rendering for NVIDIA GPUs that are
+no longer supported by the current 590.xx driver series.
+
+Supported GPU architectures include:
+
+Maxwell
+Includes selected GeForce GTX 700 series models and all GeForce GTX 900 series GPUs.
+Examples: GTX 750, GTX 750 Ti, GTX 960, GTX 970, GTX 980, GTX 980 Ti.
+
+Pascal
+Includes all GeForce GTX 10 series GPUs.
+Examples: GTX 1050, GTX 1050 Ti, GTX 1060, GTX 1070, GTX 1080, GTX 1080 Ti.
+
+Volta (discrete GPUs)
+Includes the NVIDIA Titan V and selected professional and compute-focused GPUs.
+
+These GPUs are supported by the 580.xx legacy driver branch and are
+not supported by NVIDIA drivers version 590 or newer.
 
 For the full product support list, please consult the release notes
-http://download.nvidia.com/XFree86/Linux-x86_64/%{version}/README/index.html
+https://download.nvidia.com/XFree86/Linux-x86_64/%{version}/README/index.html
 
 Please use the following documentation:
-http://rpmfusion.org/Howto/NVIDIA
+https://rpmfusion.org/Howto/NVIDIA
 
 
 %package devel
