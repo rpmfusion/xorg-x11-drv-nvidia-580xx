@@ -23,7 +23,7 @@
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.126.09
-Release:         1%{?dist}
+Release:         2%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -475,7 +475,7 @@ if [ "$1" -eq "1" ]; then
   fi
 fi
 
-%post
+%posttrans
 if [ "$1" -eq "1" ]; then
   %{_grubby} --remove-args='nomodeset' --args='%{_dracutopts}' &>/dev/null
 # EL8 still requires a grub2-mkconfig call
@@ -487,9 +487,6 @@ if [ "$1" -eq "1" ]; then
   fi
 %endif
 fi || :
-
-%triggerun -- xorg-x11-drv-nvidia < 3:580.119.02-2
-%{_grubby} --args='%{_dracutopts}' &>/dev/null || :
 
 %preun
 if [ "$1" -eq "0" ]; then
@@ -677,6 +674,9 @@ fi ||:
 %endif
 
 %changelog
+* Fri Feb 13 2026 Sérgio Basto <sergio@serjux.com> - 3:580.126.09-2
+- Drop the triggerun on 580xx, switch %post to %posttrans
+
 * Mon Feb 09 2026 Sérgio Basto <sergio@serjux.com> - 3:580.126.09-1
 - Update xorg-x11-drv-nvidia-580xx to 580.126.09
 
