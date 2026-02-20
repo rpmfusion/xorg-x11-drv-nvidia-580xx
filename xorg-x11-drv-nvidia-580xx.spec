@@ -23,7 +23,7 @@
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.126.18
-Release:         1%{?dist}.1
+Release:         1%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -674,7 +674,7 @@ fi ||:
 %endif
 
 %changelog
-* Fri Feb 20 2026 Sérgio Basto <sergio@serjux.com> - 3:580.126.18-1.1
+* Fri Feb 20 2026 Sérgio Basto <sergio@serjux.com> - 3:580.126.18-1
 - Update xorg-x11-drv-nvidia-580xx to 580.126.18
 
 * Mon Feb 16 2026 Nicolas Chauvet <kwizart@gmail.com> - 3:580.126.09-2.1
