@@ -679,7 +679,7 @@ fi ||:
 
 %changelog
 * Sun May 24 2026 Nicolas Chauvet <kwizart@gmail.com> - 3:580.159.03-1.1
-- Fixup xserver videodrv ABI
+- Fixup xserver videodrv ABI - rfbz#7468
 
 * Wed Apr 29 2026 Sérgio Basto <sergio@serjux.com> - 3:580.159.03-1
 - Update xorg-x11-drv-nvidia-580xx to 580.159.03
