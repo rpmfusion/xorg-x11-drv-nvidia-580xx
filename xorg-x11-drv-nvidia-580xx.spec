@@ -23,7 +23,7 @@
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.159.03
-Release:         1%{?dist}.1
+Release:         2%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -127,6 +127,8 @@ Provides:        nvidia-driver-devel = %{?epoch}:%{version}-100
 Provides:        nvidia-driver-devel%{?_isa} = %{?epoch}:%{version}-100
 Provides:        nvidia-drivers-devel = %{?epoch}:%{version}-100
 Provides:        nvidia-drivers-devel%{?_isa} = %{?epoch}:%{version}-100
+Provides:        xorg-x11-drv-nvidia-devel = %{?epoch}:%{version}
+Obsoletes:       xorg-x11-drv-nvidia-devel < %{?epoch}:%{version}
 
 %description devel
 This package provides the development files of the %{name} package.
@@ -678,6 +680,9 @@ fi ||:
 %endif
 
 %changelog
+* Wed May 27 2026 Nicolas Chauvet <kwizart@gmail.com> - 3:580.159.03-2
+- Obsolete -devel sub-package
+
 * Sun May 24 2026 Nicolas Chauvet <kwizart@gmail.com> - 3:580.159.03-1.1
 - Fixup xserver videodrv ABI - rfbz#7468
 
