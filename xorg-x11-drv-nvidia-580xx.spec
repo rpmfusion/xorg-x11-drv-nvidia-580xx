@@ -28,8 +28,8 @@ Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic ca
 
 License:         Redistributable, no modification permitted
 URL:             https://www.nvidia.com/
-Source0:         https://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}.run
-Source1:         https://us.download.nvidia.com/XFree86/aarch64/%{version}/NVIDIA-Linux-aarch64-%{version}.run
+Source0:         https://international.download.nvidia.com/tesla/%{version}/NVIDIA-Linux-x86_64-%{version}.run
+Source1:         https://international.download.nvidia.com/tesla/%{version}/NVIDIA-Linux-aarch64-%{version}.run
 Source5:         alternate-install-present
 Source6:         nvidia.conf
 Source7:         80-nvidia-pm.rules
@@ -680,6 +680,9 @@ fi ||:
 %endif
 
 %changelog
+* Fri Jun 19 2026 Sérgio Basto <sergio@serjux.com> - 3:580.167.08-1
+- Update xorg-x11-drv-nvidia-580xx to 580.167.08
+
 * Fri May 29 2026 Sérgio Basto <sergio@serjux.com> - 3:580.159.04-1
 - Update xorg-x11-drv-nvidia-580xx to 580.159.04
 
