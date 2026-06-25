@@ -20,6 +20,15 @@
 %global        __brp_ldconfig %{nil}
 %undefine      _missing_build_ids_terminate_build
 
+%define nv_provide_conflict(s:) \
+Conflicts:       xorg-x11-drv-nvidia%{-s*} > %{?epoch}:%{version} \
+Provides:        xorg-x11-drv-nvidia%{-s*} = %{?epoch}:%{version} \
+Obsoletes:       xorg-x11-drv-nvidia%{-s*} < %{?epoch}:%{version}
+%define nv_serie_conflict(s:) \
+Conflicts:       xorg-x11-drv-nvidia-340xx%{-s*} \
+Conflicts:       xorg-x11-drv-nvidia-390xx%{-s*} \
+Conflicts:       xorg-x11-drv-nvidia-470xx%{-s*}
+
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.167.08
@@ -76,12 +85,8 @@ Obsoletes:       nvidia-kmod-common < %{?epoch}:%{version}
 Provides:        %{_nvidia_serie}-open-kmod-common = %{?epoch}:%{version}
 Provides:        nvidia-open-kmod-common = %{?epoch}:%{version}
 Obsoletes:       nvidia-open-kmod-common < %{?epoch}:%{version}
-Conflicts:       xorg-x11-drv-nvidia-340xx
-Conflicts:       xorg-x11-drv-nvidia-390xx
-Conflicts:       xorg-x11-drv-nvidia-470xx
-Conflicts:       xorg-x11-drv-nvidia > %{?epoch}:%{version}
-Provides:        xorg-x11-drv-nvidia = %{?epoch}:%{version}
-Obsoletes:       xorg-x11-drv-nvidia < %{?epoch}:%{version}
+%{nv_serie_conflict}
+%{nv_provide_conflict}
 
 %global         __provides_exclude ^(lib.*GL.*\\.so.*)$
 %global         __requires_exclude ^libglxserver_nvidia.so|^(lib.*GL.*\\.so.*)$
@@ -143,12 +148,8 @@ Requires:        nvidia-modprobe%{?_isa} >= %{?epoch}:%{version}
 Requires:        (%{name}-cuda-libs(x86-32) = %{?epoch}:%{version}-%{release} if mesa-libGL(x86-32))
 %endif
 
-Conflicts:       xorg-x11-drv-nvidia-340xx-cuda
-Conflicts:       xorg-x11-drv-nvidia-390xx-cuda
-Conflicts:       xorg-x11-drv-nvidia-470xx-cuda
-Conflicts:       xorg-x11-drv-nvidia-cuda > %{?epoch}:%{version}
-Provides:        xorg-x11-drv-nvidia-cuda = %{?epoch}:%{version}
-Obsoletes:       xorg-x11-drv-nvidia-cuda < %{?epoch}:%{version}
+%{nv_serie_conflict -s -cuda}
+%{nv_provide_conflict -s -cuda}
 
 #Don't put an epoch here
 Provides:        cuda-drivers-580 = %{version}
@@ -177,8 +178,7 @@ Requires:        opencl-filesystem
 # Don't depend on any ICD-LOADER implementation - rhbz#2375547#c2
 Requires:        libOpenCL.so.1()(64bit)
 %endif
-Provides:        xorg-x11-drv-nvidia-cuda-libs = %{?epoch}:%{version}
-Obsoletes:       xorg-x11-drv-nvidia-cuda-libs < %{?epoch}:%{version}
+%{nv_provide_conflict -s -cuda-libs}
 
 %description cuda-libs
 This package provides the CUDA driver libraries.
@@ -224,8 +224,8 @@ Requires:        (%{name}-libs(x86-32) = %{?epoch}:%{version}-%{release} if mesa
 Requires:        mesa-libEGL%{?_isa}
 Requires:        mesa-libGL%{?_isa}
 Requires:        mesa-libGLES%{?_isa}
-Provides:        xorg-x11-drv-nvidia-libs = %{?epoch}:%{version}
-Obsoletes:       xorg-x11-drv-nvidia-libs < %{?epoch}:%{version}
+%{nv_serie_conflict -s -libs}
+%{nv_provide_conflict -s -libs}
 
 
 %description libs
@@ -243,8 +243,7 @@ Requires:       xserver-abi(videodrv-24)
 Requires:       xorg-x11-xinit%{?_isa}
 # Needed so nvidia-settings can write broken configs
 Suggests:       nvidia-xconfig%{?_isa} = %{?epoch}:%{version}
-Provides:       xorg-x11-drv-nvidia-xorg-libs = %{?epoch}:%{version}
-Obsoletes:      xorg-x11-drv-nvidia-xorg-libs < %{?epoch}:%{version}
+%{nv_provide_conflict -s -xorg-libs}
 
 %description xorg-libs
 This package provides the Xorg libraries for %{name}.
