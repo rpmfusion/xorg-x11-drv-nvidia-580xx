@@ -22,14 +22,14 @@
 
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
-Version:         580.167.08
+Version:         580.173.02
 Release:         1%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
 URL:             https://www.nvidia.com/
-Source0:         https://international.download.nvidia.com/tesla/%{version}/NVIDIA-Linux-x86_64-%{version}.run
-Source1:         https://international.download.nvidia.com/tesla/%{version}/NVIDIA-Linux-aarch64-%{version}.run
+Source0:         https://us.download.nvidia.com/XFree86/Linux-x86_64/%{version}/NVIDIA-Linux-x86_64-%{version}.run
+Source1:         https://us.download.nvidia.com/XFree86/aarch64/%{version}/NVIDIA-Linux-aarch64-%{version}.run
 Source5:         alternate-install-present
 Source6:         nvidia.conf
 Source7:         80-nvidia-pm.rules
@@ -680,6 +680,10 @@ fi ||:
 %endif
 
 %changelog
+* Sat Jun 27 2026 Sérgio Basto <sergio@serjux.com> - 3:580.173.02-1
+- Update xorg-x11-drv-nvidia-580xx to 580.173.02
+- Revert "Switch download URL to the Tesla distribution" and use only NVIDIA Data Center driver versions.
+
 * Fri Jun 19 2026 Sérgio Basto <sergio@serjux.com> - 3:580.167.08-1
 - Update xorg-x11-drv-nvidia-580xx to 580.167.08
 
