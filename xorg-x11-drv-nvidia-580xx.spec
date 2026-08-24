@@ -22,7 +22,7 @@
 
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
-Version:         580.173.02
+Version:         580.178.04
 Release:         1%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
@@ -680,6 +680,9 @@ fi ||:
 %endif
 
 %changelog
+* Mon Aug 24 2026 Sérgio Basto <sergio@serjux.com> - 3:580.178.04-1
+- Update xorg-x11-drv-nvidia-580xx to 580.178.04
+
 * Sat Jun 27 2026 Sérgio Basto <sergio@serjux.com> - 3:580.173.02-1
 - Update xorg-x11-drv-nvidia-580xx to 580.173.02
 - Revert "Switch download URL to the Tesla distribution" and use only NVIDIA Data Center driver versions.
