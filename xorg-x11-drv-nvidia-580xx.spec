@@ -31,7 +31,7 @@ Conflicts:       xorg-x11-drv-nvidia-470xx%{-s*}
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.178.04
-Release:         1%{?dist}
+Release:         2%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -682,6 +682,9 @@ fi ||:
 %endif
 
 %changelog
+* Sat Oct 10 2026 Sérgio Basto <sergio@serjux.com> - 3:580.178.04-2
+- Provide proper conflicts on more subpackages
+
 * Mon Aug 24 2026 Sérgio Basto <sergio@serjux.com> - 3:580.178.04-1
 - Update xorg-x11-drv-nvidia-580xx to 580.178.04
 
