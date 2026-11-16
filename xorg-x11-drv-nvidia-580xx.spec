@@ -19,19 +19,19 @@
 %global        __brp_ldconfig %{nil}
 %undefine      _missing_build_ids_terminate_build
 
-%define nv_provide_conflict(s:) \
-Conflicts:       xorg-x11-drv-nvidia%{-s*} > %{?epoch}:%{version} \
-Provides:        xorg-x11-drv-nvidia%{-s*} = %{?epoch}:%{version} \
-Obsoletes:       xorg-x11-drv-nvidia%{-s*} < %{?epoch}:%{version}
-%define nv_serie_conflict(s:) \
+%define nv_serie_provide_conflict(s:) \
+Conflicts:       xorg-x11-drv-nvidia-580xx%{-s*} > %{?epoch}:%{version} \
+Provides:        xorg-x11-drv-nvidia-580xx%{-s*} = %{?epoch}:%{version} \
+Obsoletes:       xorg-x11-drv-nvidia-580xx%{-s*} < %{?epoch}:%{version} \
 Conflicts:       xorg-x11-drv-nvidia-340xx%{-s*} \
 Conflicts:       xorg-x11-drv-nvidia-390xx%{-s*} \
 Conflicts:       xorg-x11-drv-nvidia-470xx%{-s*}
+Conflicts:       xorg-x11-drv-nvidia%{-s*}
 
 Name:            xorg-x11-drv-%{_nvidia_serie}
 Epoch:           3
 Version:         580.196.07
-Release:         1%{?dist}
+Release:         2%{?dist}
 Summary:         NVIDIA's 580xx proprietary display driver for NVIDIA graphic cards
 
 License:         Redistributable, no modification permitted
@@ -80,14 +80,11 @@ Requires:        %{name}-libs%{?_isa} = %{?epoch}:%{version}-%{release}
 
 Obsoletes:       %{_nvidia_serie}-kmod < %{?epoch}:%{version}
 Provides:        %{_nvidia_serie}-kmod-common = %{?epoch}:%{version}
-Provides:        nvidia-kmod-common = %{?epoch}:%{version}
-Obsoletes:       nvidia-kmod-common < %{?epoch}:%{version}
+Obsoletes:       %{_nvidia_serie}-kmod-common < %{?epoch}:%{version}
 # Support nvidia-open-kmod
 Provides:        %{_nvidia_serie}-open-kmod-common = %{?epoch}:%{version}
-Provides:        nvidia-open-kmod-common = %{?epoch}:%{version}
-Obsoletes:       nvidia-open-kmod-common < %{?epoch}:%{version}
-%{nv_serie_conflict}
-%{nv_provide_conflict}
+Obsoletes:       %{_nvidia_serie}-open-kmod-common < %{?epoch}:%{version}
+%{nv_serie_provide_conflict}
 
 %global         __provides_exclude ^(lib.*GL.*\\.so.*)$
 %global         __requires_exclude ^libglxserver_nvidia.so|^(lib.*GL.*\\.so.*)$
@@ -133,8 +130,7 @@ Provides:        nvidia-driver-devel = %{?epoch}:%{version}-100
 Provides:        nvidia-driver-devel%{?_isa} = %{?epoch}:%{version}-100
 Provides:        nvidia-drivers-devel = %{?epoch}:%{version}-100
 Provides:        nvidia-drivers-devel%{?_isa} = %{?epoch}:%{version}-100
-Provides:        xorg-x11-drv-nvidia-devel = %{?epoch}:%{version}
-Obsoletes:       xorg-x11-drv-nvidia-devel < %{?epoch}:%{version}
+%{nv_serie_provide_conflict -s -devel}
 
 %description devel
 This package provides the development files of the %{name} package.
@@ -148,9 +144,6 @@ Requires:        nvidia-modprobe%{?_isa} >= %{?epoch}:%{version}
 %ifarch x86_64
 Requires:        (%{name}-cuda-libs(x86-32) = %{?epoch}:%{version}-%{release} if mesa-libGL(x86-32))
 %endif
-
-%{nv_serie_conflict -s -cuda}
-%{nv_provide_conflict -s -cuda}
 
 #Don't put an epoch here
 Provides:        cuda-drivers-580 = %{version}
@@ -168,6 +161,7 @@ Provides:        nvidia-open = %{?epoch}:%{version}-100
 Provides:        nvidia-open%{?_isa} = %{?epoch}:%{version}-100
 Provides:        nvidia-open-%(echo %{version} | cut -f 1 -d .) = %{version}
 Provides:        nvidia-open-570 = %{version}
+%{nv_serie_provide_conflict -s -cuda}
 
 %description cuda
 This package provides the CUDA driver tools.
@@ -179,7 +173,7 @@ Requires:        opencl-filesystem
 # Don't depend on any ICD-LOADER implementation - rhbz#2375547#c2
 Requires:        libOpenCL.so.1()(64bit)
 %endif
-%{nv_provide_conflict -s -cuda-libs}
+%{nv_serie_provide_conflict -s -cuda-libs}
 
 %description cuda-libs
 This package provides the CUDA driver libraries.
@@ -225,8 +219,7 @@ Requires:        (%{name}-libs(x86-32) = %{?epoch}:%{version}-%{release} if mesa
 Requires:        mesa-libEGL%{?_isa}
 Requires:        mesa-libGL%{?_isa}
 Requires:        mesa-libGLES%{?_isa}
-%{nv_serie_conflict -s -libs}
-%{nv_provide_conflict -s -libs}
+%{nv_serie_provide_conflict -s -libs}
 
 
 %description libs
@@ -244,7 +237,7 @@ Requires:       xserver-abi(videodrv-24)
 Requires:       xorg-x11-xinit%{?_isa}
 # Needed so nvidia-settings can write broken configs
 Suggests:       nvidia-xconfig%{?_isa} = %{?epoch}:%{version}
-%{nv_provide_conflict -s -xorg-libs}
+%{nv_serie_provide_conflict -s -xorg-libs}
 
 %description xorg-libs
 This package provides the Xorg libraries for %{name}.
@@ -682,6 +675,9 @@ fi ||:
 %endif
 
 %changelog
+* Mon Nov 16 2026 Sérgio Basto <sergio@serjux.com> - 3:580.196.07-2
+- Fixes and improvements to "Provide proper conflicts on more subpackages"
+
 * Thu Oct 22 2026 Sérgio Basto <sergio@serjux.com> - 3:580.196.07-1
 - Update xorg-x11-drv-nvidia-580xx to 580.196.07
 
